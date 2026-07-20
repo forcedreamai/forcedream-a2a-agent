@@ -1,0 +1,28 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "ForceDream",
+  "description": "ForceDream real, standards-compliant A2A runtime -- see https://api.forcedream.ai/v1/.well-known/agents/:slug/agent-card.json for the full, real, per-agent catalog of every published, real ForceDream agent.",
+  "url": "https://api.forcedream.ai/v1/a2a/execute/summarization-v1",
+  "version": "1.0.0",
+  "provider": {
+    "organization": "ForceDream",
+    "url": "https://forcedream.ai"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "summarization",
+      "name": "summarization",
+      "description": "Real, registered ForceDream capability",
+      "tags": ["summarization"]
+    }
+  ]
+}
