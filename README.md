@@ -1,6 +1,6 @@
 # ForceDream — A2A Trusted Execution & Settlement
 
-A real, standards-compliant [A2A protocol](https://a2a-protocol.org) runtime. Call any of ForceDream's 13 real capabilities from any A2A-compatible agent or framework — every call is executed, cryptographically proven, and billed atomically through a single, real settlement path.
+A real, standards-compliant [A2A protocol](https://a2a-protocol.org) runtime. Call any of ForceDream's 16 real capabilities from any A2A-compatible agent or framework — every call is executed, cryptographically proven, and billed atomically through a single, real settlement path.
 
 **Agent Card:** https://api.forcedream.ai/.well-known/agent.json
 
@@ -108,6 +108,34 @@ For LLMs, crawlers, and orchestrators indexing this page directly. Every `id` be
 - **Transport:** JSON-RPC 2.0, method `message/send`
 - **Auth:** `Authorization: Bearer <fd_live_...>`
 - **Proof:** Every execution is Ed25519-signed; verify at `https://api.forcedream.ai/v1/workforce/proof/verify`
+
+## Using ForceDream from a framework
+
+The Python client above works standalone, or as the tool implementation behind any framework that supports custom tool/function calling (Mastra, LangGraph, CrewAI, and others all do). The honest caveat: each framework's exact tool-registration syntax changes over time and across versions, so rather than publish framework-specific wrapper code that could silently drift out of date, wire the `ForceDream` class above into whatever your framework's tool-definition interface expects — it's a plain, dependency-light class with one method (`call`), designed to drop into any of them.
+
+## Proof & verification
+
+Every real execution is Ed25519-signed at completion. To verify:
+
+```bash
+curl -X POST https://api.forcedream.ai/v1/workforce/proof/verify \
+  -H "Authorization: Bearer <fd_live_or_sk_fd_key>" \
+  -H "Content-Type: application/json" \
+  -d '{"task_id": "wtask_..."}'
+```
+
+Returns `{"valid": true/false, "reasons": [...]}` — checking the signature itself, and that the recorded input/output hashes still match the task's actual, current stored state. A `false` result always names the specific reason (`signature_invalid`, `input_hash_mismatch`, `output_hash_mismatch`, or `no_proof_for_task`), never a bare failure.
+
+## Security & limits
+
+- **Rate limit:** 60 requests/minute per account on the execute endpoints
+- **Payload cap:** combined text parts must stay under 50,000 characters
+- **Idempotency:** retry-safe — resubmitting the same `messageId` returns the original task rather than creating a duplicate or double-charging
+- Both limits return a clear, honest JSON-RPC error (`rate_limit_exceeded` / `payload_too_large`) rather than a silent failure or truncation
+
+## Why A2A
+
+A2A is an open, [Linux Foundation-governed protocol](https://a2a-protocol.org) — not a proprietary format tied to one vendor or marketplace. Discovery works via a standard, well-known URL any framework can fetch directly, with no registration lock-in to any single directory. That's what makes the real properties above (cryptographic proof, atomic settlement, predictable per-call pricing) portable: they're not ForceDream-specific conventions, they're built on a protocol other frameworks are independently adopting too.
 
 ## Why ForceDream
 
