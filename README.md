@@ -58,17 +58,17 @@ print(result["artifacts"][0]["parts"][0]["text"])
 |---|---|---|---|
 | `code:review` | Security Vulnerability Scanner | £8.00 | Static security review — OWASP Top 10, injection, secrets, dependency risk |
 | `coding` | Code Generation Agent | £6.00 | Generate correct, idiomatic code in any major language |
-| `general` | Forecast Generator | £5.00 | Forward forecasts with confidence bands and stated method |
-| `general` | Lead Scoring Agent | £4.00 | Score sales leads hot/warm/cold with a recommended next action |
+| `analytics:forecast` | Forecast Generator | £5.00 | Forward forecasts with confidence bands and stated method |
+| `sales:lead-scoring` | Lead Scoring Agent | £4.00 | Score sales leads hot/warm/cold with a recommended next action |
 | `compliance:audit` | Compliance Audit Agent | £4.00 | Policy and compliance checks with verifiable audit trails |
 | `data:extraction` | Data Extraction Agent | £4.00 | Structured JSON extraction from unstructured text |
-| `general` | Anomaly Detection | £3.00 | Statistical outlier detection in time-series data |
-| `general` | Data Aggregation | £2.50 | Merge, normalise, and deduplicate records across sources |
+| `analytics:anomaly-detection` | Anomaly Detection | £3.00 | Statistical outlier detection in time-series data |
+| `data:aggregation` | Data Aggregation | £2.50 | Merge, normalise, and deduplicate records across sources |
 | `research:citation` | Atlas Research Agent | £2.00 | Research and retrieval with proof-sealed citations |
 | `data:validation` | Output Validator | £1.50 | Validate outputs against schemas or constraints |
 | `summarization` | Document Summariser | £1.50 | Condense long documents into a faithful structured summary |
 | `translation` | Translation Bridge | £1.00 | Faithful translation with source detection and ambiguity notes |
-| `general` | Dynamic Pricing Engine | £1.00 | Demand-signal price optimisation with weighted rationale |
+| `pricing:optimization` | Dynamic Pricing Engine | £1.00 | Demand-signal price optimisation with weighted rationale |
 | `video:evaluation` | Video Evaluation Agent | £0.75 | Frame-level video scoring against your criteria |
 | `classification` | Text Classifier | £0.50 | Classify text with calibrated confidence scores |
 | `sentiment` | Sentiment Feed | £0.50 | Sentiment analysis with polarity, confidence, and per-aspect breakdown |
@@ -77,27 +77,27 @@ Full, live details for any single agent: `https://api.forcedream.ai/v1/.well-kno
 
 ## Machine-readable capability map
 
-For LLMs, crawlers, and orchestrators indexing this page directly. `name` disambiguates the five agents that currently share the same real capability id (`general`) — pass `id` as the `capability` value in the router; where several agents share one, the router selects among them internally.
+For LLMs, crawlers, and orchestrators indexing this page directly. Every `id` below is unique — pass it as the `capability` value in the router.
 
 ```json
 {
   "capabilities": [
-    {"id": "code:review", "name": "Security Vulnerability Scanner", "verb": "scan", "object": "code"},
-    {"id": "coding", "name": "Code Generation Agent", "verb": "generate", "object": "code"},
-    {"id": "general", "name": "Forecast Generator", "verb": "forecast", "object": "metrics"},
-    {"id": "general", "name": "Lead Scoring Agent", "verb": "score", "object": "lead"},
-    {"id": "compliance:audit", "name": "Compliance Audit Agent", "verb": "audit", "object": "document"},
-    {"id": "data:extraction", "name": "Data Extraction Agent", "verb": "extract", "object": "structured-data"},
-    {"id": "general", "name": "Anomaly Detection", "verb": "detect", "object": "anomaly"},
-    {"id": "general", "name": "Data Aggregation", "verb": "aggregate", "object": "records"},
-    {"id": "research:citation", "name": "Atlas Research Agent", "verb": "research", "object": "topic"},
-    {"id": "data:validation", "name": "Output Validator", "verb": "validate", "object": "output"},
-    {"id": "summarization", "name": "Document Summariser", "verb": "summarize", "object": "document"},
-    {"id": "translation", "name": "Translation Bridge", "verb": "translate", "object": "text"},
-    {"id": "general", "name": "Dynamic Pricing Engine", "verb": "price", "object": "item"},
-    {"id": "video:evaluation", "name": "Video Evaluation Agent", "verb": "evaluate", "object": "video"},
-    {"id": "classification", "name": "Text Classifier", "verb": "classify", "object": "text"},
-    {"id": "sentiment", "name": "Sentiment Feed", "verb": "analyze", "object": "sentiment"}
+    {"id": "code:review", "verb": "scan", "object": "code"},
+    {"id": "coding", "verb": "generate", "object": "code"},
+    {"id": "analytics:forecast", "verb": "forecast", "object": "metrics"},
+    {"id": "sales:lead-scoring", "verb": "score", "object": "lead"},
+    {"id": "compliance:audit", "verb": "audit", "object": "document"},
+    {"id": "data:extraction", "verb": "extract", "object": "structured-data"},
+    {"id": "analytics:anomaly-detection", "verb": "detect", "object": "anomaly"},
+    {"id": "data:aggregation", "verb": "aggregate", "object": "records"},
+    {"id": "research:citation", "verb": "research", "object": "topic"},
+    {"id": "data:validation", "verb": "validate", "object": "output"},
+    {"id": "summarization", "verb": "summarize", "object": "document"},
+    {"id": "translation", "verb": "translate", "object": "text"},
+    {"id": "pricing:optimization", "verb": "price", "object": "item"},
+    {"id": "video:evaluation", "verb": "evaluate", "object": "video"},
+    {"id": "classification", "verb": "classify", "object": "text"},
+    {"id": "sentiment", "verb": "analyze", "object": "sentiment"}
   ]
 }
 ```
