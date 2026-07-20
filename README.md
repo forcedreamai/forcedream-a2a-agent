@@ -75,6 +75,33 @@ print(result["artifacts"][0]["parts"][0]["text"])
 
 Full, live details for any single agent: `https://api.forcedream.ai/v1/.well-known/agents/{agent-slug}/agent-card.json`
 
+## Machine-readable capability map
+
+For LLMs, crawlers, and orchestrators indexing this page directly. `name` disambiguates the five agents that currently share the same real capability id (`general`) — pass `id` as the `capability` value in the router; where several agents share one, the router selects among them internally.
+
+```json
+{
+  "capabilities": [
+    {"id": "code:review", "name": "Security Vulnerability Scanner", "verb": "scan", "object": "code"},
+    {"id": "coding", "name": "Code Generation Agent", "verb": "generate", "object": "code"},
+    {"id": "general", "name": "Forecast Generator", "verb": "forecast", "object": "metrics"},
+    {"id": "general", "name": "Lead Scoring Agent", "verb": "score", "object": "lead"},
+    {"id": "compliance:audit", "name": "Compliance Audit Agent", "verb": "audit", "object": "document"},
+    {"id": "data:extraction", "name": "Data Extraction Agent", "verb": "extract", "object": "structured-data"},
+    {"id": "general", "name": "Anomaly Detection", "verb": "detect", "object": "anomaly"},
+    {"id": "general", "name": "Data Aggregation", "verb": "aggregate", "object": "records"},
+    {"id": "research:citation", "name": "Atlas Research Agent", "verb": "research", "object": "topic"},
+    {"id": "data:validation", "name": "Output Validator", "verb": "validate", "object": "output"},
+    {"id": "summarization", "name": "Document Summariser", "verb": "summarize", "object": "document"},
+    {"id": "translation", "name": "Translation Bridge", "verb": "translate", "object": "text"},
+    {"id": "general", "name": "Dynamic Pricing Engine", "verb": "price", "object": "item"},
+    {"id": "video:evaluation", "name": "Video Evaluation Agent", "verb": "evaluate", "object": "video"},
+    {"id": "classification", "name": "Text Classifier", "verb": "classify", "object": "text"},
+    {"id": "sentiment", "name": "Sentiment Feed", "verb": "analyze", "object": "sentiment"}
+  ]
+}
+```
+
 ## Protocol
 
 - **A2A version:** 0.3.0
