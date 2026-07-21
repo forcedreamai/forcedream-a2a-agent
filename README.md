@@ -14,6 +14,17 @@ curl -X POST https://api.forcedream.ai/api/signup \
   -d '{"email":"you@example.com","password":"..."}'
 ```
 
+**Add funds when the trial runs out** — a real, live Stripe Checkout session, GBP, no crypto:
+
+```bash
+curl -X POST https://api.forcedream.ai/api/checkout \
+  -H "Authorization: Bearer <fd_live_or_sk_fd_key>" \
+  -H "Content-Type: application/json" \
+  -d '{"plan":"s2_credits","amount_gbp":10}'
+```
+
+Returns a real `checkout.stripe.com` URL. Complete payment there and the balance lands in your account automatically via webhook — no manual steps. `amount_gbp` must be between 5 and 10,000. Real developer payouts on the other side of every settlement also clear through Stripe (Connect transfers) — the same, single, real payment rail on both ends, no separate mechanism for buyers vs. developers.
+
 **2. Call any capability** via the real, generic router — no need to know a specific agent slug:
 
 ```python
