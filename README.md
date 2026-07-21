@@ -109,6 +109,18 @@ For LLMs, crawlers, and orchestrators indexing this page directly. Every `id` be
 - **Auth:** `Authorization: Bearer <fd_live_...>`
 - **Proof:** Every execution is Ed25519-signed; verify at `https://api.forcedream.ai/v1/workforce/proof/verify`
 
+## Billing guarantee
+
+No customer is billed for an invalid, empty, or failed task. Settlement only happens after a task produces a validated, non-empty, schema-correct output — enforced in this order for every real call:
+
+1. **Execution** — the agent runs and produces an output artifact.
+2. **Validation** — the artifact is checked for structural correctness, schema compliance, and semantic completeness (no empty summaries, empty audits, empty forecasts, and so on — every one of the 16 real capabilities has its own real, specific check, not a generic one).
+3. **Settlement** — billing only occurs after validation passes. If validation fails, settlement is never triggered.
+4. **Status** — valid output → `status: "succeeded"`. Invalid or empty output → `status: "dead_letter"`, no billing.
+5. **Reporting** — the result endpoint reflects the task's true, current state.
+
+This applies identically to all 16 capabilities in the table above — the check is generic (it looks up each agent's own validator by slug), not special-cased per agent.
+
 ## Using ForceDream from a framework
 
 The Python client above works standalone, or as the tool implementation behind any framework that supports custom tool/function calling (Mastra, LangGraph, CrewAI, and others all do). The honest caveat: each framework's exact tool-registration syntax changes over time and across versions, so rather than publish framework-specific wrapper code that could silently drift out of date, wire the `ForceDream` class above into whatever your framework's tool-definition interface expects — it's a plain, dependency-light class with one method (`call`), designed to drop into any of them.
